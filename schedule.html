@@ -2,67 +2,66 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Installment Schedule</title>
-
+    <title>Installment Schedule - Installment Generator</title>
     <link rel="stylesheet" href="css/style.css">
-
 </head>
 
 <body>
 
 <header class="navbar">
-
     <div class="logo">
-        Installment Generator
+        <a href="dashboard.html" style="color: white; text-decoration: none;">Installment Generator</a>
     </div>
 
     <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="loan.html">New Schedule</a>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard & Calculator</a>
+        <a href="schedule.html" style="font-weight: bold; color: #ffffff;">Schedule</a>
+        <a href="report.html">Reports</a>
         <button onclick="window.print()" class="print-btn">
-            Print
+            🖨 Print Schedule
         </button>
     </nav>
-
 </header>
 
 <section class="schedule-container">
 
-    <h1>Installment Schedule</h1>
+    <div style="margin-bottom: 20px;">
+        <a href="dashboard.html" style="color: #2563eb; text-decoration: none; font-size: 14px;">← Back to Dashboard</a>
+    </div>
+
+    <h1>Installment Repayment Schedule</h1>
 
     <div id="summary" class="summary"></div>
 
     <div class="table-container">
-
         <table>
-
             <thead>
-
                 <tr>
-                    <th>No.</th>
+                    <th>Installment #</th>
                     <th>Due Date</th>
-                    <th>Installment</th>
-                    <th>Principal</th>
-                    <th>Interest</th>
-                    <th>Balance</th>
+                    <th>Installment (EMI)</th>
+                    <th>Principal Paid</th>
+                    <th>Interest Paid</th>
+                    <th>Remaining Balance</th>
                 </tr>
-
             </thead>
-
             <tbody id="scheduleBody">
-
+                <tr>
+                    <td colspan="6" style="text-align: center; padding: 25px; color: #64748b;">
+                        Loading repayment schedule...
+                    </td>
+                </tr>
             </tbody>
-
         </table>
-
     </div>
 
 </section>
 
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
 <script src="js/schedule.js"></script>
 
 </body>

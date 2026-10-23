@@ -1,80 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Login - Installment Schedule Generator</title>
-
+    <meta http-equiv="refresh" content="0; url=dashboard.html">
+    <title>Redirecting to Loan Calculator & Dashboard</title>
     <link rel="stylesheet" href="css/style.css">
+    <script>
+        window.location.replace("dashboard.html");
+    </script>
 </head>
-
-<body>
-
-    <div class="auth-container">
-
-        <div class="auth-box">
-
-            <h2>Login</h2>
-
-            <p id="loginMessage"></p>
-
-            <form id="loginForm">
-
-                <label for="loginEmail">
-                    Email
-                </label>
-
-                <input
-                    type="email"
-                    id="loginEmail"
-                    name="email"
-                    placeholder="Enter your email"
-                    required
-                >
-
-                <label for="loginPassword">
-                    Password
-                </label>
-
-                <input
-                    type="password"
-                    id="loginPassword"
-                    name="password"
-                    placeholder="Enter your password"
-                    required
-                >
-
-                <button
-                    type="submit"
-                    class="btn">
-                    Login
-                </button>
-
-            </form>
-
-            <p>
-                Don't have an account?
-                <a href="register.html">Register</a>
-            </p>
-
-            <p>
-                <a href="index.html">
-                    ← Back to Home
-                </a>
-            </p>
-
-        </div>
-
+<body style="display: flex; justify-content: center; align-items: center; min-height: 100vh; text-align: center; font-family: sans-serif;">
+    <div style="background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); max-width: 450px;">
+        <h2 style="color: #0f172a; margin-bottom: 12px;">Redirecting to Loan Calculator...</h2>
+        <p style="color: #64748b; margin-bottom: 20px;">
+            Login has been removed. You are being redirected directly to the Dashboard & Loan Calculator.
+        </p>
+        <a href="dashboard.html" class="btn" style="background: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 6px; font-weight: bold;">
+            Go to Dashboard & Calculator →
+        </a>
     </div>
-
-
-    <!-- JavaScript -->
-
-    <script src="js/main.js"></script>
-    <script src="js/auth.js"></script>
-
 </body>
-
 </html>

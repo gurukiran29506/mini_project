@@ -2,33 +2,66 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Repayment Report</title>
-
+    <title>Repayment Report - Installment Schedule Generator</title>
     <link rel="stylesheet" href="css/style.css">
-
+    <style>
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+            body {
+                background: white !important;
+            }
+            .report {
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                max-width: 100% !important;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="report">
+<header class="navbar no-print">
+    <div class="logo">
+        <a href="dashboard.html" style="color: white; text-decoration: none;">Installment Generator</a>
+    </div>
 
-    <h1>Installment Repayment Report</h1>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html">Dashboard & Calculator</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="report.html" style="font-weight: bold; color: #ffffff;">Reports</a>
+        <button onclick="window.print()" class="print-btn">
+            🖨 Print Report
+        </button>
+    </nav>
+</header>
 
-    <div id="reportDetails"></div>
+<div class="report" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); margin: 30px auto;">
 
-    <button
-        onclick="window.print()"
-        class="btn">
-        Print Report
-    </button>
+    <div class="no-print" style="margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center;">
+        <a href="dashboard.html" style="color: #2563eb; text-decoration: none; font-size: 14px;">← Back to Dashboard</a>
+        <button onclick="window.print()" class="btn" style="padding: 8px 18px; font-size: 14px;">
+            🖨 Print Official Statement
+        </button>
+    </div>
+
+    <div id="reportDetails">
+        <div style="text-align: center; padding: 40px; color: #64748b;">
+            Loading statement & schedule report...
+        </div>
+    </div>
 
 </div>
 
-<script src="js/schedule.js"></script>
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/report.js"></script>
 
 </body>
 </html>

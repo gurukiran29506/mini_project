@@ -4,19 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>Register - Installment Schedule Generator</title>
-
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
+
+    <header class="navbar">
+        <div class="logo">
+            <a href="index.html" style="color: white; text-decoration: none;">Installment Generator</a>
+        </div>
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="loan.html">Loan Calculator</a>
+            <a href="dashboard.html">Dashboard</a>
+            <a href="schedule.html">Schedule</a>
+            <a href="report.html">Reports</a>
+            <a href="login.html" style="font-weight: bold;">Login</a>
+
+            <div class="nav-dropdown">
+                <button type="button" class="nav-dropdown-toggle">
+                    <span>Explore Pages</span>
+                    <span style="font-size: 10px;">▼</span>
+                </button>
+                <div class="nav-dropdown-menu">
+                    <a href="index.html" class="nav-dropdown-item">
+                        <span class="item-icon">🏠</span>
+                        <span>Home Overview</span>
+                    </a>
+                    <a href="loan.html" class="nav-dropdown-item">
+                        <span class="item-icon">🧮</span>
+                        <span>Loan Calculator</span>
+                    </a>
+                    <a href="dashboard.html" class="nav-dropdown-item">
+                        <span class="item-icon">📊</span>
+                        <span>User Dashboard</span>
+                    </a>
+                    <a href="schedule.html" class="nav-dropdown-item">
+                        <span class="item-icon">📅</span>
+                        <span>Repayment Schedule</span>
+                    </a>
+                    <a href="report.html" class="nav-dropdown-item">
+                        <span class="item-icon">📑</span>
+                        <span>Statement Reports</span>
+                    </a>
+                    <div class="nav-dropdown-divider"></div>
+                    <a href="login.html" class="nav-dropdown-item">
+                        <span class="item-icon">🔑</span>
+                        <span>Login Account</span>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
 
     <div class="auth-container">
 
         <div class="auth-box">
 
             <h2>Create Account</h2>
+            <p style="color: #64748b; font-size: 14px; margin-top: -15px; margin-bottom: 20px;">
+                Register to generate and store your loan repayment schedules
+            </p>
 
             <form id="registerForm">
 
@@ -24,7 +73,6 @@
                 <label for="name">
                     Full Name
                 </label>
-
                 <input
                     type="text"
                     id="name"
@@ -33,75 +81,65 @@
                     required
                 >
 
-
                 <!-- Email -->
                 <label for="email">
                     Email Address
                 </label>
-
                 <input
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="Enter your email"
+                    placeholder="name@example.com"
                     required
                 >
-
 
                 <!-- Password -->
                 <label for="password">
                     Password
                 </label>
-
                 <input
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="Enter password"
+                    placeholder="Minimum 6 characters"
                     minlength="6"
                     required
                 >
-
 
                 <!-- Confirm Password -->
                 <label for="confirmPassword">
                     Confirm Password
                 </label>
-
                 <input
                     type="password"
                     id="confirmPassword"
                     name="confirmPassword"
-                    placeholder="Confirm your password"
+                    placeholder="Re-type your password"
                     minlength="6"
                     required
                 >
 
-
                 <!-- Register Button -->
                 <button
                     type="submit"
-                    class="btn">
-                    Register
+                    class="btn"
+                    style="margin-top: 25px;">
+                    Register Account
                 </button>
 
             </form>
 
-
             <!-- Login Link -->
-
-            <p>
+            <p style="margin-top: 20px; font-size: 14px;">
                 Already have an account?
-                <a href="login.html">
-                    Login
+                <a href="login.html" style="color: #2563eb; font-weight: bold;">
+                    Login here
                 </a>
             </p>
 
-
             <!-- Home Link -->
-
-            <p>
-                <a href="index.html">
+            <p style="font-size: 13px; margin-top: 10px;">
+                <a href="index.html" style="color: #64748b; text-decoration: none;">
                     ← Back to Home
                 </a>
             </p>
@@ -110,9 +148,8 @@
 
     </div>
 
-
     <!-- JavaScript -->
-
+    <script src="js/config.js"></script>
     <script src="js/main.js"></script>
     <script src="js/auth.js"></script>
 

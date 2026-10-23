@@ -4,70 +4,327 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Dashboard</title>
-
+    <title>Dashboard & Loan Calculator - Installment Schedule Generator</title>
     <link rel="stylesheet" href="css/style.css">
+    <style>
+        .calculator-card {
+            background: #ffffff;
+            border-radius: 14px;
+            padding: 30px;
+            border: 1px solid #e2e8f0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            margin-top: 25px;
+        }
+
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .calc-live-preview {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: #ffffff;
+            border-radius: 12px;
+            padding: 22px 26px;
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+            align-items: center;
+        }
+
+        .calc-preview-item {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .calc-preview-label {
+            font-size: 12px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-weight: 600;
+        }
+
+        .calc-preview-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: #38bdf8;
+            letter-spacing: -0.5px;
+        }
+
+        .calc-preview-value.accent {
+            color: #10b981;
+        }
+    </style>
 </head>
 
 <body>
 
 <header class="navbar">
-
     <div class="logo">
-        Installment Generator
+        <a href="dashboard.html" style="color: white; text-decoration: none;">Installment Generator</a>
     </div>
 
     <nav>
-        <a href="dashboard.html">Dashboard</a>
-        <a href="loan.html">New Schedule</a>
-        <a href="index.html">Logout</a>
+        <a href="index.html">Home</a>
+        <a href="dashboard.html" style="font-weight: bold; color: #ffffff;">Dashboard & Calculator</a>
+        <a href="schedule.html">Schedule</a>
+        <a href="report.html">Reports</a>
     </nav>
-
 </header>
 
 <section class="dashboard">
 
-    <h1>Welcome to Dashboard</h1>
-
-    <p>
-        Generate and manage your installment schedules.
-    </p>
-
-    <div class="dashboard-cards">
-
-        <div class="dashboard-card">
-
-            <h2>Generate Schedule</h2>
-
-            <p>
-                Enter loan details and calculate your
-                installment schedule.
+    <!-- Dashboard Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;">
+        <div>
+            <h1>Loan Dashboard & Calculator</h1>
+            <p style="color: #64748b;">
+                Calculate your installment schedule directly, view live amortization metrics, and manage your loans.
             </p>
-
-            <a href="loan.html" class="btn">
-                Create Schedule
+        </div>
+        <div>
+            <a href="schedule.html" class="btn" style="background: #0f172a; border: 1px solid #334155; font-size: 13.5px;">
+                📅 View Current Schedule
             </a>
+            <a href="report.html" class="btn" style="background: #059669; font-size: 13.5px; margin-left: 6px;">
+                📑 View Statement
+            </a>
+        </div>
+    </div>
 
+    <!-- DIRECT LOAN CALCULATOR SECTION -->
+    <div class="calculator-card">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+            <div>
+                <h2 style="font-size: 20px; color: #0f172a; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+                    <span>🧮</span> Loan Calculator & Schedule Generator
+                </h2>
+                <p style="color: #64748b; font-size: 13.5px; margin: 0;">
+                    Enter loan specifications below to calculate the reducing-balance EMI and create a complete repayment schedule.
+                </p>
+            </div>
+            <button type="button" id="fillDemoBtn" style="background: #e0f2fe; color: #0369a1; border: 1px solid #bae6fd; padding: 7px 14px; border-radius: 6px; cursor: pointer; font-size: 12.5px; font-weight: 600;">
+                💡 Fill Demo Values (₹1,00,000 @ 10%)
+            </button>
+        </div>
+
+        <form id="loanForm">
+            <div class="calc-grid">
+                <div>
+                    <label for="principal">Principal Amount (₹)</label>
+                    <input type="number" id="principal" min="1" step="any" placeholder="e.g. 100000" value="100000" required>
+                </div>
+
+                <div>
+                    <label for="interest">Annual Interest Rate (%)</label>
+                    <input type="number" id="interest" min="0" step="0.01" placeholder="e.g. 10.0" value="10" required>
+                </div>
+
+                <div>
+                    <label for="tenure">Tenure (Months)</label>
+                    <input type="number" id="tenure" min="1" placeholder="e.g. 12" value="12" required>
+                </div>
+
+                <div>
+                    <label for="frequency">Installment Frequency</label>
+                    <select id="frequency" required>
+                        <option value="monthly" selected>Monthly</option>
+                        <option value="weekly">Weekly</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="yearly">Yearly</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for="startDate">Starting Date</label>
+                    <input type="date" id="startDate" required>
+                </div>
+            </div>
+
+            <!-- Real-time Live Calculation Preview -->
+            <div class="calc-live-preview">
+                <div class="calc-preview-item">
+                    <span class="calc-preview-label">Estimated Installment (EMI)</span>
+                    <span class="calc-preview-value accent" id="liveEmiDisplay">₹8,791.59</span>
+                </div>
+                <div class="calc-preview-item">
+                    <span class="calc-preview-label">Total Interest Payable</span>
+                    <span class="calc-preview-value" id="liveInterestDisplay">₹5,499.06</span>
+                </div>
+                <div class="calc-preview-item">
+                    <span class="calc-preview-label">Total Repayment Amount</span>
+                    <span class="calc-preview-value" id="liveTotalDisplay">₹1,05,499.06</span>
+                </div>
+                <div style="text-align: right;">
+                    <button type="submit" class="btn" style="background: #2563eb; font-weight: 700; padding: 12px 24px; box-shadow: 0 4px 14px rgba(37,99,235,0.4);">
+                        ⚡ Generate Full Schedule →
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Quick Stats -->
+    <div id="dashboardStats" class="stat-grid" style="margin-top: 30px;"></div>
+
+    <!-- Action Cards -->
+    <div class="dashboard-cards" style="margin-top: 25px;">
+        <div class="dashboard-card">
+            <h2>📅 Repayment Schedule</h2>
+            <p>
+                View the complete month-by-month amortization breakdown with principal, interest, and balance tracking.
+            </p>
+            <a href="schedule.html" class="btn" style="background: #2563eb;">
+                Open Schedule Table
+            </a>
         </div>
 
         <div class="dashboard-card">
-
-            <h2>View Report</h2>
-
+            <h2>📑 Statement & Reports</h2>
             <p>
-                View the previously generated installment report.
+                View and print the official loan statement report with summary figures and authorized statement details.
             </p>
-
-            <a href="schedule.html" class="btn">
-                View Schedule
+            <a href="report.html" class="btn" style="background: #059669;">
+                Print Official Statement
             </a>
+        </div>
+    </div>
 
+    <!-- Saved Loan Records -->
+    <div style="margin-top: 35px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #e2e8f0;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h2 style="font-size: 20px; color: #1e293b;">📋 Saved Loan Records</h2>
+                <p style="color: #64748b; font-size: 13.5px; margin: 2px 0 0 0;">History of generated loans stored in the system</p>
+            </div>
         </div>
 
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Loan #</th>
+                        <th id="userColHeader" style="display: none;">Borrower</th>
+                        <th>Principal</th>
+                        <th>Rate (%)</th>
+                        <th>Tenure</th>
+                        <th>Installment (EMI)</th>
+                        <th>Start Date</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="savedLoansBody">
+                    <tr>
+                        <td colspan="8" style="text-align: center; color: #64748b; padding: 25px;">
+                            Loading loan records...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Administration Panel (if Admin) -->
+    <div id="adminPanel" style="display: none; margin-top: 35px; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border-top: 4px solid #f59e0b;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+            <div>
+                <h2 style="font-size: 20px; color: #1e293b;">👑 Admin Control Panel</h2>
+                <p style="color: #64748b; font-size: 13.5px; margin: 2px 0 0 0;">System administrative records</p>
+            </div>
+            <span class="badge badge-admin">Administrator Mode</span>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>User ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Registered On</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="adminUsersBody">
+                    <tr>
+                        <td colspan="6" style="text-align: center; color: #64748b; padding: 20px;">
+                            Loading user registry...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 
 </section>
 
+<!-- JavaScript -->
+<script src="js/config.js"></script>
+<script src="js/main.js"></script>
+<script src="js/loan.js"></script>
+<script>
+    // Live calculation helper for interactive preview
+    function updateLivePreview() {
+        const principal = parseFloat(document.getElementById("principal").value) || 0;
+        const interest = parseFloat(document.getElementById("interest").value) || 0;
+        const tenure = parseInt(document.getElementById("tenure").value, 10) || 1;
+
+        if (principal <= 0 || tenure <= 0) {
+            document.getElementById("liveEmiDisplay").textContent = "₹0.00";
+            document.getElementById("liveInterestDisplay").textContent = "₹0.00";
+            document.getElementById("liveTotalDisplay").textContent = "₹0.00";
+            return;
+        }
+
+        const monthlyRate = (interest / 12) / 100;
+        let emi = 0;
+        if (monthlyRate === 0) {
+            emi = principal / tenure;
+        } else {
+            const factor = Math.pow(1 + monthlyRate, tenure);
+            emi = (principal * monthlyRate * factor) / (factor - 1);
+        }
+
+        const totalPayment = emi * tenure;
+        const totalInterest = totalPayment - principal;
+
+        document.getElementById("liveEmiDisplay").textContent = "₹" + emi.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById("liveInterestDisplay").textContent = "₹" + totalInterest.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+        document.getElementById("liveTotalDisplay").textContent = "₹" + totalPayment.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // Attach listeners for live calculation
+    document.getElementById("principal").addEventListener("input", updateLivePreview);
+    document.getElementById("interest").addEventListener("input", updateLivePreview);
+    document.getElementById("tenure").addEventListener("input", updateLivePreview);
+    document.getElementById("frequency").addEventListener("change", updateLivePreview);
+
+    // Initial calculation on load
+    document.addEventListener("DOMContentLoaded", function() {
+        const startDateInput = document.getElementById("startDate");
+        if (startDateInput && !startDateInput.value) {
+            startDateInput.value = new Date().toISOString().split("T")[0];
+        }
+        updateLivePreview();
+    });
+
+    // Fill Demo Values button
+    document.getElementById("fillDemoBtn").addEventListener("click", function() {
+        document.getElementById("principal").value = "100000";
+        document.getElementById("interest").value = "10";
+        document.getElementById("tenure").value = "12";
+        document.getElementById("frequency").value = "monthly";
+        document.getElementById("startDate").value = new Date().toISOString().split("T")[0];
+        updateLivePreview();
+    });
+</script>
+
 </body>
+
 </html>
